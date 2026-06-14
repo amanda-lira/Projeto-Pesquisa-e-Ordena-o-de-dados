@@ -6,7 +6,7 @@ from analisador.questionario import executar_questionario
 from analisador.motor_decisao import gerar_recomendacao
 
 # =====================================================================
-# SIMULADORES (MOCKS) - irei substituir qdo fizerem o motor de devisao e as caracteristicas.
+# SIMULADORES (MOCKS) - irei substituir qdo fizerem o motor de devisao e as caracteristicas.g
 # =====================================================================
 def mock_extrair_caracteristicas(array):
     print("[Sistema] Analisando o array inserido...")
