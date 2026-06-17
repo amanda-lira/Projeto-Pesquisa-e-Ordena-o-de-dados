@@ -15,7 +15,6 @@ def merge_sort(arr):
 
         i = j = k = 0
 
-        # Mesclagem (Merge)
         while i < len(metade_esquerda) and j < len(metade_direita):
             comparacoes += 1
             if metade_esquerda[i] <= metade_direita[j]:
