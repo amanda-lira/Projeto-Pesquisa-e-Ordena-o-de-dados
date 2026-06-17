@@ -15,27 +15,26 @@ def merge_sort(arr):
 
         i = j = k = 0
 
+        # Mesclagem (Merge)
         while i < len(metade_esquerda) and j < len(metade_direita):
             comparacoes += 1
-            if metade_esquerda[i] < metade_direita[j]:
+            if metade_esquerda[i] <= metade_direita[j]:
                 arr[k] = metade_esquerda[i]
                 i += 1
             else:
                 arr[k] = metade_direita[j]
                 j += 1
+                trocas += (len(metade_esquerda) - i)
             k += 1
-            trocas += 1 # Cada atribuição a arr[k] pode ser considerada uma troca em termos de movimentação de dados
 
         while i < len(metade_esquerda):
             arr[k] = metade_esquerda[i]
             i += 1
             k += 1
-            trocas += 1
 
         while j < len(metade_direita):
             arr[k] = metade_direita[j]
             j += 1
             k += 1
-            trocas += 1
 
     return arr, comparacoes, trocas

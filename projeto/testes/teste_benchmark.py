@@ -40,7 +40,7 @@ def main():
         "Busca Binária": busca_binaria,
     }
 
-    tamanhos_array = [3,4,100]
+    tamanhos_array = [3,4,7]
     num_execucoes = 5
 
     print("Iniciando o benchmarking dos algoritmos de ordenação...")
@@ -52,6 +52,7 @@ def main():
         array_aleatorio = gerar_array_aleatorio(tamanho)
         print("\nCenário: Array Aleatório (Ordenação)")
         for nome, func in algoritmos_ordenacao.items():
+            print(array_aleatorio)
             avaliador = AvaliadorDesempenho(func, num_execucoes=num_execucoes)
             resultados = avaliador.executar(array_aleatorio)
             print(f"  {nome}:")
