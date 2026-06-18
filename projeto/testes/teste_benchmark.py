@@ -40,7 +40,11 @@ def main():
         "Busca Binária": busca_binaria,
     }
 
+<<<<<<< HEAD
     tamanhos_array = [3,4,7]
+=======
+    tamanhos_array = [3,4,100]
+>>>>>>> 23ad691 (feat (Validacao): implementa os calculos de metricas utilizadas nos graficos para validar o seletor, bem como o arquivo gerar_graficos.py)
     num_execucoes = 5
 
     print("Iniciando o benchmarking dos algoritmos de ordenação...")
@@ -52,7 +56,10 @@ def main():
         array_aleatorio = gerar_array_aleatorio(tamanho)
         print("\nCenário: Array Aleatório (Ordenação)")
         for nome, func in algoritmos_ordenacao.items():
+<<<<<<< HEAD
             print(array_aleatorio)
+=======
+>>>>>>> 23ad691 (feat (Validacao): implementa os calculos de metricas utilizadas nos graficos para validar o seletor, bem como o arquivo gerar_graficos.py)
             avaliador = AvaliadorDesempenho(func, num_execucoes=num_execucoes)
             resultados = avaliador.executar(array_aleatorio)
             print(f"  {nome}:")
