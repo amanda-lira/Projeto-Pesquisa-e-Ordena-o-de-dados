@@ -23,10 +23,6 @@
 # ---------------------------------------------------------------------------
 # Informações descritivas de cada algoritmo (usadas em gerar_recomendacao)
 # ---------------------------------------------------------------------------
-from rich.console import Console
-from rich.panel import Panel
-from rich.table import Table
-from rich import box
 
 INFO_ALGORITMOS = {
     "Merge Sort": {
@@ -146,7 +142,7 @@ def calcular_pontuacoes(caracteristicas: dict) -> dict:
 def gerar_recomendacao(pontuacoes: dict, caracteristicas: dict) -> None:
     """
     Seleciona o algoritmo com maior pontuação e exibe a recomendação
-    em um Dashboard formatado no terminal usando a biblioteca 'rich'.
+    no formato esperado pelo projeto.
     """
     algoritmos_ordenados = sorted(
         pontuacoes.items(), key=lambda x: x[1], reverse=True
@@ -159,7 +155,9 @@ def gerar_recomendacao(pontuacoes: dict, caracteristicas: dict) -> None:
         melhor_algoritmo, {"complexidade": "N/A", "aviso": "N/A"}
     )
 
+    # ── Justificativas ─────────────────────────────────────────────────
     justificativas = []
+
     tamanho           = caracteristicas.get("tamanho", 0)
     quase_ordenado    = caracteristicas.get("quase_ordenado", False)
     muitas_duplicatas = caracteristicas.get("muitas_duplicatas", False)
@@ -167,45 +165,35 @@ def gerar_recomendacao(pontuacoes: dict, caracteristicas: dict) -> None:
     restricao_memoria = caracteristicas.get("restricao_memoria", False)
 
     if tamanho > _LIMITE_GRANDE and melhor_algoritmo in {"Merge Sort", "Quick Sort", "Heap Sort"}:
-        justificativas.append("Conjunto de dados grande; requer algoritmo eficiente O(n log n).")
+        justificativas.append("conjunto de dados grande; requer algoritmo eficiente")
     if estabilidade and melhor_algoritmo in {"Merge Sort", "Insertion Sort"}:
-        justificativas.append("Atende à necessidade estrita de estabilidade.")
+        justificativas.append("necessidade de estabilidade atendida")
     if quase_ordenado and melhor_algoritmo == "Insertion Sort":
-        justificativas.append("Excelente desempenho para arrays quase ordenados.")
+        justificativas.append("excelente desempenho para arrays quase ordenados")
     if muitas_duplicatas and melhor_algoritmo == "Merge Sort":
-        justificativas.append("Lida muito bem com arrays contendo várias duplicatas.")
+        justificativas.append("lida bem com arrays com muitos valores repetidos")
     if restricao_memoria and melhor_algoritmo in {"Heap Sort", "Quick Sort"}:
-        justificativas.append("Opera 'in-place', respeitando a forte restrição de memória.")
+        justificativas.append("opera in-place, respeitando a restrição de memória")
 
     if not justificativas:
-        justificativas.append("Apresenta o melhor equilíbrio de desempenho para estas condições.")
+        justificativas.append("melhor equilíbrio de desempenho para as condições atuais")
 
-    #  Dashboard com Rich ───────────────────────────
-    console = Console()
+    # ── Saída ──────────────────────────────────────────────────────────
+    print("\n" + "=" * 50)
+    print(" RECOMENDAÇÃO DO SELETOR ADAPTATIVO")
+    print("=" * 50)
+    print(f"Algoritmo recomendado: {melhor_algoritmo}")
+    print(f"Pontuação: {melhor_pontuacao}/100")
+    print(f"Complexidade esperada: {info['complexidade']}")
 
-    tabela = Table(show_header=False, box=box.SIMPLE)
-    tabela.add_column("Atributo", style="cyan", justify="right")
-    tabela.add_column("Valor", style="white")
+    print("\nJustificativas:")
+    for j in justificativas:
+        print(f" - {j}")
 
-    tabela.add_row("Pontuação", f"[bold green]{melhor_pontuacao}/100[/bold green]")
-    tabela.add_row("Complexidade", f"[bold yellow]{info['complexidade']}[/bold yellow]")
-    
-    just_formatadas = "\n".join([f"• {j}" for j in justificativas])
-    tabela.add_row("Justificativas", just_formatadas)
-    
-    tabela.add_row("Avisos", f"[red]{info['aviso']}[/red]")
-    
-    alts_formatadas = ", ".join(alternativas) if alternativas else "Nenhuma"
-    tabela.add_row("Alternativas", f"[dim]{alts_formatadas}[/dim]")
+    print("\nAvisos:")
+    print(f" - {info['aviso']}")
 
-    # Coloca a tabela dentro de um painel elegante
-    painel = Panel(
-        tabela,
-        title=f" Recomendação: [bold magenta]{melhor_algoritmo}[/bold magenta]",
-        expand=False,
-        border_style="blue"
-    )
-    
-    print("\n")
-    console.print(painel)
-    print("\n")
+    print("\nAlternativas:")
+    for alt in alternativas:
+        print(f" - {alt}")
+    print("=" * 50 + "\n")

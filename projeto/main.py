@@ -6,7 +6,6 @@ from analisador.questionario import executar_questionario
 from analisador.caracteristicas import Caracteristicas
 from analisador.motor_decisao import calcular_pontuacoes, gerar_recomendacao
 
-
 def modo_direto():
     print("\n" + "-"*40)
     print(" MODO DIRETO")
