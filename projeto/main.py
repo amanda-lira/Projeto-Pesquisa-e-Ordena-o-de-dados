@@ -1,9 +1,7 @@
-
-
 import sys
 
 from analisador.questionario import executar_questionario
-from analisador.motor_decisao import gerar_recomendacao
+from analisador.motor_decisao import *
 
 # =====================================================================
 # SIMULADORES (MOCKS) - irei substituir qdo fizerem o motor de devisao e as caracteristicas.
@@ -18,6 +16,7 @@ def mock_extrair_caracteristicas(array):
         "restricao_memoria": False
     }
 
+""" 
 def mock_calcular_pontuacoes(caracteristicas):
     print("[Sistema] Calculando pontuações dos algoritmos...")
     # Lógica de mentira só para testar sua tela
@@ -27,8 +26,8 @@ def mock_calcular_pontuacoes(caracteristicas):
         return {"Insertion Sort": 98, "Merge Sort": 70, "Quick Sort": 60}
     else:
         return {"Merge Sort": 85, "Heap Sort": 80, "Quick Sort": 75, "Insertion Sort": 40}
+"""
 # =====================================================================
-
 
 def modo_direto():
     print("\n" + "-"*40)
@@ -44,9 +43,9 @@ def modo_direto():
         print("Erro: Digite números válidos (ex: 5 2 9 1).")
         return
 
-    # Usando o mock (falso)
+    # Chamando função verdadeira
     caracteristicas = mock_extrair_caracteristicas(array)
-    pontuacoes = mock_calcular_pontuacoes(caracteristicas)
+    pontuacoes = calcular_pontuacoes(caracteristicas)
     
     # Chamando a SUA função (verdadeira)
     gerar_recomendacao(pontuacoes, caracteristicas)
@@ -55,8 +54,8 @@ def modo_questionario():
     # Chamando a SUA função (verdadeira)
     caracteristicas = executar_questionario()
     
-    # Usando o mock (falso)
-    pontuacoes = mock_calcular_pontuacoes(caracteristicas)
+    # Chamando função verdadeira
+    pontuacoes = calcular_pontuacoes(caracteristicas)
     
     # Chamando a SUA função (verdadeira)
     gerar_recomendacao(pontuacoes, caracteristicas)
