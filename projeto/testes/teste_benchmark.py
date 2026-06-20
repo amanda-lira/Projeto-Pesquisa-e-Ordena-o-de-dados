@@ -40,7 +40,7 @@ def main():
         "Busca Binária": busca_binaria,
     }
 
-    tamanhos_array = [3,4,7]
+    tamanhos_array = [3,4,100]
     num_execucoes = 5
 
     print("Iniciando o benchmarking dos algoritmos de ordenação...")
