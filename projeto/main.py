@@ -1,64 +1,54 @@
+# projeto/main.py
+
 import sys
 
 from analisador.questionario import executar_questionario
-from analisador.motor_decisao import *
-
-# =====================================================================
-# SIMULADORES (MOCKS) - irei substituir qdo fizerem o motor de devisao e as caracteristicas.
-# =====================================================================
-def mock_extrair_caracteristicas(array):
-    print("[Sistema] Analisando o array inserido...")
-    return {
-        "tamanho": len(array),
-        "quase_ordenado": False,
-        "muitas_duplicatas": False,
-        "estabilidade": True,
-        "restricao_memoria": False
-    }
-
-""" 
-def mock_calcular_pontuacoes(caracteristicas):
-    print("[Sistema] Calculando pontuações dos algoritmos...")
-    # Lógica de mentira só para testar sua tela
-    if caracteristicas.get("tamanho", 0) > 10000:
-        return {"Merge Sort": 95, "Quick Sort": 85, "Heap Sort": 80, "Insertion Sort": 10}
-    elif caracteristicas.get("quase_ordenado"):
-        return {"Insertion Sort": 98, "Merge Sort": 70, "Quick Sort": 60}
-    else:
-        return {"Merge Sort": 85, "Heap Sort": 80, "Quick Sort": 75, "Insertion Sort": 40}
-"""
-# =====================================================================
+from analisador.caracteristicas import Caracteristicas
+from analisador.motor_decisao import calcular_pontuacoes, gerar_recomendacao
 
 def modo_direto():
     print("\n" + "-"*40)
-    print("MODO DIRETO")
+    print(" MODO DIRETO")
     print("-"*40)
     entrada = input("Digite os números do array separados por espaço: ")
     
     try:
         array = [int(x) for x in entrada.split()]
-        if not array:
-            raise ValueError
+        if len(array) < 2:
+            print("Erro: Digite pelo menos dois números válidos.")
+            return
     except ValueError:
         print("Erro: Digite números válidos (ex: 5 2 9 1).")
         return
 
-    # Chamando função verdadeira
-    caracteristicas = mock_extrair_caracteristicas(array)
-    pontuacoes = calcular_pontuacoes(caracteristicas)
+    # 1. Instancia a classe e analisa o array
+    analisador = Caracteristicas()
+    dados_brutos = analisador.analisa(array)
     
-    # Chamando a SUA função (verdadeira)
-    gerar_recomendacao(pontuacoes, caracteristicas)
+    # 2. Traduz os dados matemáticos do analisador para o formato que o motor espera
+    # Consideramos "quase ordenado" se a taxa de ordenação for maior que 80% (0.8)
+    # Consideramos "muitas duplicatas" se mais de 30% (0.3) do array for repetido
+    caracteristicas_adaptadas = {
+        "tamanho": dados_brutos["tamanho"],
+        "quase_ordenado": dados_brutos["grau_ordenacao"] > 0.8, 
+        "muitas_duplicatas": dados_brutos["duplicatas"] > 0.3,
+        "estabilidade": False,      
+        "restricao_memoria": False 
+    }
+
+    # 3. Calcula as pontuações e gera a recomendação
+    pontuacoes = calcular_pontuacoes(caracteristicas_adaptadas)
+    gerar_recomendacao(pontuacoes, caracteristicas_adaptadas)
+
 
 def modo_questionario():
-    # Chamando a SUA função (verdadeira)
+    # 1. Coleta as respostas do usuário
     caracteristicas = executar_questionario()
     
-    # Chamando função verdadeira
+    # 2. Calcula as pontuações e gera a recomendação
     pontuacoes = calcular_pontuacoes(caracteristicas)
-    
-    # Chamando a SUA função (verdadeira)
     gerar_recomendacao(pontuacoes, caracteristicas)
+
 
 def main():
     while True:
