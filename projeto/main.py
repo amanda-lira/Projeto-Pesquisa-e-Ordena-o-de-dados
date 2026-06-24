@@ -1,86 +1,121 @@
-
+# projeto/main.py
 
 import sys
 
 from analisador.questionario import executar_questionario
-from analisador.motor_decisao import gerar_recomendacao
+from analisador.caracteristicas import Caracteristicas
+from analisador.motor_decisao import (
+	calcular_pontuacoes,
+	gerar_recomendacao
+)
 
-# =====================================================================
-# SIMULADORES (MOCKS) - irei substituir qdo fizerem o motor de devisao e as caracteristicas.
-# =====================================================================
-def mock_extrair_caracteristicas(array):
-    print("[Sistema] Analisando o array inserido...")
-    return {
-        "tamanho": len(array),
-        "quase_ordenado": False,
-        "muitas_duplicatas": False,
-        "estabilidade": True,
-        "restricao_memoria": False
-    }
 
-def mock_calcular_pontuacoes(caracteristicas):
-    print("[Sistema] Calculando pontuações dos algoritmos...")
-    # Lógica de mentira só para testar sua tela
-    if caracteristicas.get("tamanho", 0) > 10000:
-        return {"Merge Sort": 95, "Quick Sort": 85, "Heap Sort": 80, "Insertion Sort": 10}
-    elif caracteristicas.get("quase_ordenado"):
-        return {"Insertion Sort": 98, "Merge Sort": 70, "Quick Sort": 60}
-    else:
-        return {"Merge Sort": 85, "Heap Sort": 80, "Quick Sort": 75, "Insertion Sort": 40}
-# =====================================================================
+def adaptar_caracteristicas(dados_brutos):
+	"""
+	Converte as características numéricas obtidas do array
+	para o formato esperado pelo motor de decisão.
+	"""
+
+	return {
+		"tamanho": dados_brutos["tamanho"],
+		"quase_ordenado": dados_brutos["grau_ordenacao"] > 0.8,
+		"muitas_duplicatas": dados_brutos["duplicatas"] > 0.3,
+		"estabilidade": False,
+		"restricao_memoria": False
+	}
 
 
 def modo_direto():
-    print("\n" + "-"*40)
-    print("MODO DIRETO")
-    print("-"*40)
-    entrada = input("Digite os números do array separados por espaço: ")
-    
-    try:
-        array = [int(x) for x in entrada.split()]
-        if not array:
-            raise ValueError
-    except ValueError:
-        print("Erro: Digite números válidos (ex: 5 2 9 1).")
-        return
 
-    # Usando o mock (falso)
-    caracteristicas = mock_extrair_caracteristicas(array)
-    pontuacoes = mock_calcular_pontuacoes(caracteristicas)
-    
-    # Chamando a SUA função (verdadeira)
-    gerar_recomendacao(pontuacoes, caracteristicas)
+	print("\n" + "-" * 40)
+	print(" MODO DIRETO")
+	print("-" * 40)
+
+	entrada = input(
+		"Digite os números do array separados por espaço: "
+	)
+
+	try:
+
+		array = [int(x) for x in entrada.split()]
+
+		if len(array) < 2:
+			print(
+				"Erro: Digite pelo menos dois números válidos."
+			)
+			return
+
+	except ValueError:
+
+		print(
+			"Erro: Digite números válidos (ex: 5 2 9 1)."
+		)
+		return
+
+	analisador = Caracteristicas()
+
+	dados_brutos = analisador.analisa(array)
+
+	caracteristicas = adaptar_caracteristicas(
+		dados_brutos
+	)
+
+	pontuacoes = calcular_pontuacoes(
+		caracteristicas
+	)
+
+	gerar_recomendacao(
+		pontuacoes,
+		caracteristicas
+	)
+
 
 def modo_questionario():
-    # Chamando a SUA função (verdadeira)
-    caracteristicas = executar_questionario()
-    
-    # Usando o mock (falso)
-    pontuacoes = mock_calcular_pontuacoes(caracteristicas)
-    
-    # Chamando a SUA função (verdadeira)
-    gerar_recomendacao(pontuacoes, caracteristicas)
+
+	caracteristicas = executar_questionario()
+
+	pontuacoes = calcular_pontuacoes(
+		caracteristicas
+	)
+
+	gerar_recomendacao(
+		pontuacoes,
+		caracteristicas
+	)
+
 
 def main():
-    while True:
-        print("\n" + "="*40)
-        print("⚙️  SELETOR ADAPTATIVO DE ALGORITMOS ⚙️")
-        print("="*40)
-        print("1. Modo Direto (Fornecer Array)")
-        print("2. Modo Questionário (Responder Perguntas)")
-        print("0. Sair")
-        
-        opcao = input("\nEscolha uma opção: ").strip()
-        
-        if opcao == '1':
-            modo_direto()
-        elif opcao == '2':
-            modo_questionario()
-        elif opcao == '0':
-            print("Encerrando o sistema...")
-            sys.exit(0)
-        else:
-            print("Opção inválida. Tente novamente.")
+
+	while True:
+
+		print("\n" + "=" * 40)
+		print("⚙️  SELETOR ADAPTATIVO DE ALGORITMOS ⚙️")
+		print("=" * 40)
+		print("1. Modo Direto (Fornecer Array)")
+		print("2. Modo Questionário (Responder Perguntas)")
+		print("0. Sair")
+
+		opcao = input(
+			"\nEscolha uma opção: "
+		).strip()
+
+		if opcao == "1":
+			modo_direto()
+
+		elif opcao == "2":
+			modo_questionario()
+
+		elif opcao == "0":
+			print(
+				"Encerrando o sistema..."
+			)
+			sys.exit(0)
+
+		else:
+			print(
+				"Opção inválida. Tente novamente."
+			)
+
 
 if __name__ == "__main__":
-    main()
+	main()
