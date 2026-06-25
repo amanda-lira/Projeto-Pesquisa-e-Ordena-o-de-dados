@@ -44,7 +44,7 @@ CENARIOS = [
     ("Duplicatas", gerar_array_com_duplicatas)
 ]
 
-TAMANHOS = [100, 1000, 5000]
+TAMANHOS = [1000, 5000, 10000]
 
 
 
@@ -53,10 +53,13 @@ def benchmark_completo(vetor):
     """Roda todos os algoritmos de ordenacao no mesmo array
     resultado={nome_algoritmo: {tempo_medio, comparacoes_medias, trocas_medias}}."""
 
-    return {
-        nome: AvaliadorDesempenho(funcao, num_execucoes=3).executar(vetor)
-        for nome, funcao in ALGORITMOS.items()
-    }
+    resultados = {}
+    for nome, funcao in ALGORITMOS.items():
+        avaliador = AvaliadorDesempenho(funcao, num_execucoes=3)
+        metricas = avaliador.executar(vetor)
+        resultados[nome] = metricas
+    return resultados
+
 
 def obter_top2(resultados):
 
