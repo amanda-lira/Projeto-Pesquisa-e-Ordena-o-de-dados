@@ -52,7 +52,6 @@ def main():
         array_aleatorio = gerar_array_aleatorio(tamanho)
         print("\nCenário: Array Aleatório (Ordenação)")
         for nome, func in algoritmos_ordenacao.items():
-            print(array_aleatorio)
             avaliador = AvaliadorDesempenho(func, num_execucoes=num_execucoes)
             resultados = avaliador.executar(array_aleatorio)
             print(f"  {nome}:")
