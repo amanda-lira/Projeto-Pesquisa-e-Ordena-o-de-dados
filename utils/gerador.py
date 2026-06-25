@@ -5,12 +5,8 @@ def gerar_array_aleatorio(tamanho):
 
 def gerar_array_quase_ordenado(tamanho):
     arr = list(range(tamanho))
-<<<<<<< HEAD
-    for _ in range(tamanho // 10):
-=======
     num_trocas = min(10, tamanho // 2)
     for _ in range(num_trocas):
->>>>>>> origin/feature/validacao
         i, j = random.sample(range(tamanho), 2)
         arr[i], arr[j] = arr[j], arr[i]
     return arr
