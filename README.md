@@ -4,7 +4,16 @@
 
 ## Descrição
 
-[Descrever brevemente o que o sistema faz]
+O projeto propõe guiar o usuário para a melhor solução de um problema especificado, seu passo a passo consiste em:
+
+1. análise das características de um problema de ordenação ou busca;
+2. recomendação automática de algoritmo mais adequado;
+3. justificação técnica a decisão tomada;
+4. validação empírica a eficiência da recomendação.
+
+O sistema é composto por três camadas principais:
+
+![Fluxo](public/image.png)
 
 ## Integrantes
 
@@ -16,7 +25,7 @@
 ## Requisitos
 
 ```bash
-pip install -r requirements.txt
+pip install matplotlib
 ```
 
 ## Como executar
@@ -33,22 +42,69 @@ python main.py
 ## Estrutura do projeto
 
 ```
-projeto/
+Projeto-Pesquisa-e-Ordenacao-de-dados/
+│
 ├── algoritmos/
-│   ├── ordenacao/
-│   └── busca/
-├── analisador/
-│   ├── caracteristicas.py
-│   ├── motor_decisao.py
-│   └── questionario.py
-├── validacao/
+│   ├── pesquisa.py
+│   ├── ordenacao.py
+│   └── ...
+│
 ├── testes/
-├── utils/
-└── main.py
+│   ├── test_busca.py
+│   ├── test_metricas.py
+│   ├── test_motor_decisao.py
+│   ├── test_ordenacao.py
+│   └── test_seletor.py
+│
+├── teste_benchmark.py
+├── requirements.txt
+└── README.md
 ```
 
-## Testes
+## Executando os testes
+
+Para executar todos os testes do projeto:
 
 ```bash
-pytest testes/
+python -m unittest discover -s testes -v
 ```
+
+Resultado esperado:
+
+```
+Ran 17 tests
+
+OK
+```
+
+---
+
+## Benchmark
+
+O benchmark permite comparar o desempenho dos algoritmos implementados.
+
+Execute:
+
+```bash
+python teste_benchmark.py
+```
+
+---
+
+## Tecnologias utilizadas
+
+- Python
+- Matplotlib
+- unittest
+
+---
+
+## Autores
+
+Victor Anderson Bizerra Nicolau
+
+João Victor Vieira do Nascimento
+
+Rozane Raquel da Silva Goncalves
+
+Amanda de Lira Silva

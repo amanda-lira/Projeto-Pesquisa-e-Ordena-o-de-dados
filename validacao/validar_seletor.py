@@ -46,8 +46,6 @@ CENARIOS = [
 
 TAMANHOS = [1000, 5000, 10000]
 
-
-
 def benchmark_completo(vetor):
 
     """Roda todos os algoritmos de ordenacao no mesmo array
@@ -113,9 +111,6 @@ def validar_cenario(vetor):
         "overhead": overhead
     }
 
-
-
-
 def inicializar_contador_cenario(acertos_por_tipo, nome_cenario):
     """Cria o contador de acertos/total para um tipo de cenario novo."""
 
@@ -135,7 +130,6 @@ def registrar_metricas(resultado, overheads, tempos_decisao):
 
     overheads.append(resultado["overhead"])
     tempos_decisao.append(resultado["tempo_decisao"])
-
 
 def registrar_dados_graficos(linhas_algoritmos, linhas_cenarios, resultado, nome_cenario, tamanho):
     """Monta as duas listas em memoria para alimentar gerar_todos_os_graficos"""

@@ -61,10 +61,6 @@ _ALGORITMOS_INSTAVEIS = {"Quick Sort", "Heap Sort", "Selection Sort"}
 _LIMITE_GRANDE = 100_000
 
 
-# ---------------------------------------------------------------------------
-# Pontuações base
-# ---------------------------------------------------------------------------
-
 _PONTUACOES_BASE = {
     "Insertion Sort": 50,
     "Selection Sort": 40,
@@ -73,11 +69,6 @@ _PONTUACOES_BASE = {
     "Quick Sort":     70,
     "Heap Sort":      65,
 }
-
-
-# ---------------------------------------------------------------------------
-# Função principal: calcular_pontuacoes
-# ---------------------------------------------------------------------------
 
 def calcular_pontuacoes(caracteristicas: dict) -> dict:
     """
@@ -133,11 +124,6 @@ def calcular_pontuacoes(caracteristicas: dict) -> dict:
     pontuacoes = {alg: max(0, min(100, pts)) for alg, pts in pontuacoes.items()}
 
     return pontuacoes
-
-
-# ---------------------------------------------------------------------------
-# Função de exibição: gerar_recomendacao  (mantém interface já usada no main)
-# ---------------------------------------------------------------------------
 
 def gerar_recomendacao(pontuacoes: dict, caracteristicas: dict) -> None:
     """
